@@ -10,18 +10,18 @@ import Foundation
 
 enum RenderModeEnumeration {
 
-    case Balls
-    case Sticks
+    case balls
+    case sticks
 }
 
 enum RenderColourEnumeration {
     
-    case CPK
-    case Amino
+    case cpk
+    case amino
 }
 
-class State {
+final class State {
     
-    var mode: RenderModeEnumeration = RenderModeEnumeration.Balls
-    var colour: RenderColourEnumeration = RenderColourEnumeration.CPK
+    var mode: RenderModeEnumeration = RenderModeEnumeration.balls
+    var colour: RenderColourEnumeration = RenderColourEnumeration.cpk
 }

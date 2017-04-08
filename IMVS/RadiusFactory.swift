@@ -8,9 +8,9 @@
 
 import Foundation
 
-class SizeFactory {
+final class SizeFactory {
     
-    class func makeCovalentSize(atom: Atom) -> Float {
+    class func makeCovalentSize(_ atom: Atom) -> Float {
         
         switch atom.element {
         case "H" :

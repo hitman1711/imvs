@@ -8,17 +8,17 @@
 
 import Foundation
 
-class PDBLoader {
+final class PDBLoader {
     
     var molecule = Molecule()
     
-    func loadMoleculeForPath(pdbFile: String) {
+    func loadMoleculeForPath(_ pdbFile: String) {
         
-        let path = NSBundle.mainBundle().pathForResource(pdbFile, ofType: "pdb")
+        let path = Bundle.main.path(forResource: pdbFile, ofType: "pdb")
         molecule.name = pdbFile
-
-        let content = String(contentsOfFile: path!, encoding: NSUTF8StringEncoding, error: nil)
-        let lines = content!.componentsSeparatedByCharactersInSet(NSCharacterSet.newlineCharacterSet())
+        
+        let content = try? String(contentsOfFile: path!, encoding: String.Encoding.utf8)
+        let lines = content!.components(separatedBy: CharacterSet.newlines)
        
         for line in lines {
             readHEADERWithLine(line)
@@ -28,28 +28,28 @@ class PDBLoader {
         molecule.commit()
     }
     
-    func getDataForColumnsInLine(line: String, from: Int, to: Int) -> String {
-        let tmp = (line as NSString).substringFromIndex(from - 1)
-        return (tmp as NSString).substringToIndex(to - from + 1).stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+    func getDataForColumnsInLine(_ line: String, from: Int, to: Int) -> String {
+        let tmp = (line as NSString).substring(from: from - 1)
+        return (tmp as NSString).substring(to: to - from + 1).trimmingCharacters(in: CharacterSet.whitespaces)
     }
     
-    func isRecordTypeEqualTo(to: String, line: String) -> Bool {
+    func isRecordTypeEqualTo(_ to: String, line: String) -> Bool {
         
-        if line.isEmpty || count(line) < 6 {
+        if line.isEmpty || line.characters.count < 6 {
             return false
         }
         
         return getDataForColumnsInLine(line, from: 1, to: 6) == to
     }
 
-    func readHEADERWithLine(line: String) {
+    func readHEADERWithLine(_ line: String) {
         
         if isRecordTypeEqualTo("HEADER", line: line) {
             // molecule.name = getDataForColumnsInLine(line, from: 11, to: 50)
         }
     }
     
-    func readATOMWithLine(line: String) {
+    func readATOMWithLine(_ line: String) {
         
         if isRecordTypeEqualTo("ATOM", line: line) {
             

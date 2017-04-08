@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Atom : Hashable {
+final class Atom : Hashable {
     
     var id: String  = ""
     var name: String  = ""

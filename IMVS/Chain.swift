@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Chain {
+final class Chain {
     
     var id: String = ""
     var residues: [Residue] = []
@@ -24,7 +24,7 @@ class Chain {
         self.id = id
     }
     
-    func addAtom(atom: Atom) {
+    func addAtom(_ atom: Atom) {
         
         // Create new residues as they occur
         if residue.name != atom.residue {

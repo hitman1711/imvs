@@ -8,9 +8,9 @@
 
 import Foundation
 
-class ColourFactory {
+final class ColourFactory {
     
-    class func makeCPKColour(atom: Atom) -> Colour {
+    class func makeCPKColour(_ atom: Atom) -> Colour {
         
         switch atom.element {
         case "C" :
@@ -78,7 +78,7 @@ class ColourFactory {
      * Amino acid residue colours (default)
      * http://life.nthu.edu.tw/~fmhsu/rasframe/COLORS.HTM
      */
-    class func makeAminoColour(atom: Atom) -> Colour {
+    class func makeAminoColour(_ atom: Atom) -> Colour {
         
         switch atom.residue {
         case "ASP" :

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SecondaryStructure {
+final class SecondaryStructure {
     
     var id: String = ""
     

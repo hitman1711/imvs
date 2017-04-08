@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PeriodicTable {
+final class PeriodicTable {
 
     // class var HYDROGEN = "H"
     
@@ -36,7 +36,7 @@ class PeriodicTable {
         "XX": Element(symbol: "XX", valence: 0.60)
     ]
     
-    func getElementBySymbol(symbol: String) -> Element {
+    func getElementBySymbol(_ symbol: String) -> Element {
         
         var elem = table[symbol];
         

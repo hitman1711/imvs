@@ -20,7 +20,7 @@ import Foundation
  * as the center cube of a 27-cube cube. All neighbour's atoms are accumulated into 
  * the result set.
  */
-class AtomCloud {
+final class AtomCloud {
     
     // Set this to the largest possible distance 2 points would
     // be separated by
@@ -37,26 +37,26 @@ class AtomCloud {
     /**
      * Insert an Atom into this cloud.
      */
-    func insert(atom: Atom) {
+    func insert(_ atom: Atom) {
         
         // Convert the point to a cube coordinate
-        var cx = floor(atom.position.x / cubeLength)
-        var cy = floor(atom.position.y / cubeLength)
-        var cz = floor(atom.position.z / cubeLength)
+        let cx = floor(atom.position.x / cubeLength)
+        let cy = floor(atom.position.y / cubeLength)
+        let cz = floor(atom.position.z / cubeLength)
         
         // Create cube coordinate index
-        var index = String("\(cx),\(cy),\(cz)")
+        let index = String("\(cx),\(cy),\(cz)")
         
         // Add the point to an existing or new cube
-        if var cube = grid[index] {
+        if let cube = grid[index!] {
             
             cube.objects.append(atom)
             
         } else {
 
-            var cube: AtomCloudCube = AtomCloudCube(x: cx, y: cy, z: cz, w: cubeLength, h: cubeLength, l: cubeLength)
+            let cube: AtomCloudCube = AtomCloudCube(x: cx, y: cy, z: cz, w: cubeLength, h: cubeLength, l: cubeLength)
             cube.objects.append(atom)
-            grid[index] = cube
+            grid[index!] = cube
         }
     }
     
@@ -64,14 +64,14 @@ class AtomCloud {
      * Finds nearest neighbour Atoms by finding the cube owning the query atom
      * and then looking at all 27 cubes around it.
      */
-    func nearest(atom: Atom) -> [Atom] {
+    func nearest( atom: inout Atom) -> [Atom] {
         
         var result: [Atom] = []
         
         // Convert the point to a cube coordinate
-        var cx = floor(atom.position.x / cubeLength)
-        var cy = floor(atom.position.y / cubeLength)
-        var cz = floor(atom.position.z / cubeLength)
+        let cx = floor(atom.position.x / cubeLength)
+        let cy = floor(atom.position.y / cubeLength)
+        let cz = floor(atom.position.z / cubeLength)
         
         // Top layer
         findObjectsInCube(cx - 1, y: cy + 1, z: cz, result: &result)
@@ -110,13 +110,13 @@ class AtomCloud {
     }
     
     /** Helper to return objects in a cube */
-    func findObjectsInCube(x: Float, y: Float, z: Float, inout result: [Atom]) {
+    func findObjectsInCube(_ x: Float, y: Float, z: Float, result: inout [Atom]) {
         
         // Create cube coordinate index
-        var index = String("\(x),\(y),\(z)")
+        let index = String("\(x),\(y),\(z)")
         
         // Add atoms
-        if var cube = grid[index] {
+        if let cube = grid[index!] {
             
             for atom in cube.objects {
                 result.append(atom)

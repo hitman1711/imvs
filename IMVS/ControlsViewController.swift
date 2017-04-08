@@ -8,39 +8,39 @@
 
 import UIKit
 
-class ControlsViewController: UIViewController {
+final class ControlsViewController: UIViewController {
     
     func getMoleculeViewController() -> MoleculeViewController {
-        var nc = (self.presentingViewController as! UINavigationController)
+        let nc = (self.presentingViewController as! UINavigationController)
         return nc.viewControllers[1] as! MoleculeViewController
     }
     
     func finish() {
         getMoleculeViewController().stateChanged()
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func modeBalls(sender: AnyObject) {
+    @IBAction func modeBalls(_ sender: AnyObject) {
 
-        getMoleculeViewController().state.mode = RenderModeEnumeration.Balls
+        getMoleculeViewController().state.mode = RenderModeEnumeration.balls
         finish()
     }
     
-    @IBAction func modeSticks(sender: AnyObject) {
+    @IBAction func modeSticks(_ sender: AnyObject) {
         
-        getMoleculeViewController().state.mode = RenderModeEnumeration.Sticks
+        getMoleculeViewController().state.mode = RenderModeEnumeration.sticks
         finish()
     }
     
-    @IBAction func colourCPK(sender: AnyObject) {
+    @IBAction func colourCPK(_ sender: AnyObject) {
         
-        getMoleculeViewController().state.colour = RenderColourEnumeration.CPK
+        getMoleculeViewController().state.colour = RenderColourEnumeration.cpk
         finish()
     }
     
-    @IBAction func colourAmino(sender: AnyObject) {
+    @IBAction func colourAmino(_ sender: AnyObject) {
         
-        getMoleculeViewController().state.colour = RenderColourEnumeration.Amino
+        getMoleculeViewController().state.colour = RenderColourEnumeration.amino
         finish()
     }
 }

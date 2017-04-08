@@ -8,7 +8,7 @@
 
 import Foundation
 
-class OctreeNode {
+final class OctreeNode {
     
     // All OctNodes will be leaf nodes at first, ten subdivided later as more objects get added
     var isLeaf: Bool = true
@@ -33,7 +33,7 @@ class OctreeNode {
         self.size = size
         self.objects = objects
         
-        var half: Float = (size / 2.0)
+        let half: Float = (size / 2.0)
         
         // The cube's bounding coordinates -- Not currently used
         self.ldb = [position[0] - half, position[1] - half, position[2] - half]
@@ -47,7 +47,7 @@ class OctreeNode {
  * Not tested and not currently used. Class AtomCloud is used instead.
  * No nearest neighbour routines exist in this implementation.
  */
-class Octree {
+final class Octree {
 
     var MAX_OBJECTS_PER_NODE = 10
     var DIR_LOOKUP = ["3": 0, "2": 1, "-2": 2, "-1": 3, "1": 4, "0": 5, "-4":6, "-3": 7]
@@ -64,16 +64,16 @@ class Octree {
     init(worldSize: Float) {
         
         self.worldSize = worldSize
-        var position = [Float(0.0), Float(0.0), Float(0.0)]
+        let position = [Float(0.0), Float(0.0), Float(0.0)]
         self.root = addNode(position, size: worldSize, objects: [])
     }
     
-    func addNode(position: [Float], size: Float, objects: [AnyObject?]) -> OctreeNode {
+    func addNode(_ position: [Float], size: Float, objects: [AnyObject?]) -> OctreeNode {
         
         return OctreeNode(position: position, size: size, objects: objects)
     }
     
-    func insertNode(root: OctreeNode?, size: Float, parent: OctreeNode, object: Atom)
+    func insertNode(_ root: OctreeNode?, size: Float, parent: OctreeNode, object: Atom)
         -> OctreeNode {
         
         let objectPosition = [object.position.x, object.position.y, object.position.z]
@@ -81,8 +81,8 @@ class Octree {
         if root == nil {
             
             var pos = parent.position
-            var offset = size / 2
-            var branch = findBranch(parent, position: objectPosition)
+            let offset = size / 2
+            let branch = findBranch(parent, position: objectPosition)
             
             var newCenter: [Float]?
             
@@ -117,7 +117,7 @@ class Octree {
         } else if root!.position != objectPosition && !root!.isLeaf {
             
             // we're in an octNode still, we need to traverse further
-            var branch: Int = findBranch(root!, position: objectPosition)
+            let branch: Int = findBranch(root!, position: objectPosition)
             // Find the new scale we working with
             let newSize: Float = Float(root!.size / 2)
             // Perform the same operation on the appropriate branch recursively
@@ -132,7 +132,7 @@ class Octree {
             } else if root!.objects!.count == MAX_OBJECTS_PER_NODE {
                 
                 root!.objects!.append(object)
-                var objects = root!.objects!
+                let objects = root!.objects!
                 root!.objects = nil
                 root!.isLeaf = false
                 let newSize: Float = Float(root!.size / 2)
@@ -172,7 +172,7 @@ class Octree {
      * returns an index corresponding to a branch
      * pointing in the direction we want to go
      */
-    func findBranch(root: OctreeNode, position: [Float]) -> Int {
+    func findBranch(_ root: OctreeNode, position: [Float]) -> Int {
 
         let vec1: [Float] = root.position
         let vec2: [Float] = position
@@ -198,12 +198,12 @@ class Octree {
         displayNode(root!, depth: 1)
     }
     
-    func displayNode(node: OctreeNode?, depth: Int) {
+    func displayNode(_ node: OctreeNode?, depth: Int) {
         
         if node != nil {
             for branch in node!.branches {
-                let indent = String(count: depth, repeatedValue: Character("-"))
-                println("\(indent)>\(branch) has \(branch?.objects!.count)")
+                let indent = String(repeating: "-", count: depth)
+                print("\(indent)>\(String(describing: branch)) has \(String(describing: branch?.objects!.count))")
                 displayNode(branch, depth: depth + 1)
             }
         }

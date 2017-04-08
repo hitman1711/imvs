@@ -14,9 +14,9 @@ import Foundation
  * http://www.rcsb.org/pdb/rest/search
  */
 
-class PDBRestWebService {
+final class PDBRestWebService {
     
-    func searchByTitle(title: String) {
+    func searchByTitle(_ title: String) {
     
     /*
     <orgPdbQuery>

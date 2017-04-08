@@ -12,7 +12,7 @@ import Foundation
  * Molecule
  * https://www.umass.edu/microbio/rasmol/rasbonds.htm#src
  */
-class Molecule {
+final class Molecule {
     
     var name: String = ""
     
@@ -37,7 +37,7 @@ class Molecule {
     
     var clouds: [AtomCloud] = []
         
-    func addAtom(atom: Atom) {
+    func addAtom(_ atom: Atom) {
         
         // Create new chains as they occur
         if chain.id != atom.chain {
@@ -50,7 +50,7 @@ class Molecule {
     
     func commit() {
         
-        var pt = PeriodicTable() // replace with static
+        let pt = PeriodicTable() // replace with static
         var numAtoms = 0
         
         // Compute bounds and set additional atom meta
@@ -90,7 +90,7 @@ class Molecule {
                     center.y += atom.position.y
                     center.z += atom.position.z
                     
-                    numAtoms++
+                    numAtoms += 1
                 }
             }
         }
@@ -126,17 +126,17 @@ class Molecule {
         // per-chain bonding, then other special bonds (disulphide bridges,
         // polypeptide chains and sugar phosphates)
         
-        println("Creating bonds")
+        print("Creating bonds")
         
         for chain in chains {
             
-            println("Chain \(chain.id)");
+            print("Chain \(chain.id)");
             
-            var cloud = AtomCloud(cubeLength: 1.83)
+            let cloud = AtomCloud(cubeLength: 1.83)
             
             for residue in chain.residues {
                 
-                for var i = 0; i < residue.atoms.count; i++ {
+                for i in 0 ..< residue.atoms.count {
                     
                     cloud.insert(residue.atoms[i])
                 }
@@ -146,16 +146,16 @@ class Molecule {
             doBonds(cloud, chain: chain)
         }
         
-        println("Created \(bonds.count) bonds.")
+        print("Created \(bonds.count) bonds.")
     }
     
-    func doBonds(cloud: AtomCloud, chain: Chain) {
+    func doBonds(_ cloud: AtomCloud, chain: Chain) {
 
         for residue in chain.residues {
             
-            for src in residue.atoms {
+            for var src in residue.atoms {
                 
-                let nearests = cloud.nearest(src)
+                let nearests = cloud.nearest(atom: &src)
                 
                 for dst in nearests {
                 
@@ -187,12 +187,12 @@ class Molecule {
         }
     }
     
-    func doesBondIncludeHydrogen(src: Atom, dst: Atom) -> Bool {
+    func doesBondIncludeHydrogen(_ src: Atom, dst: Atom) -> Bool {
     
         return src.element == "H" || dst.element == "H"
     }
     
-    func doesBondExist(src: Atom, dst: Atom) -> Bool {
+    func doesBondExist(_ src: Atom, dst: Atom) -> Bool {
         
         for bond in bonds {
             

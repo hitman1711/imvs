@@ -9,7 +9,6 @@
 import Foundation
 
 struct Bond {
-    
     var src: Atom
     var dst: Atom
 }

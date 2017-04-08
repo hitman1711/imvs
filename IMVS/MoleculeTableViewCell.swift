@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class MoleculeTableViewCell: UITableViewCell {
+final class MoleculeTableViewCell: UITableViewCell {
     
     @IBOutlet var nameLabel: UILabel?
     
@@ -17,7 +17,7 @@ class MoleculeTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier);
     }
     
-    required init(coder aDecoder: NSCoder!) {
-        super.init(coder: aDecoder)
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)!
     }
 }

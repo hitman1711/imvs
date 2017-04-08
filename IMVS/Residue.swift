@@ -18,7 +18,7 @@ import Foundation
  * http://www.chemguide.co.uk/organicprops/aminoacids/proteinstruct.html
  * C and N terminus
  */
-class Residue {
+final class Residue {
     
     var name: String = ""
     var atoms: [Atom] = []
@@ -32,7 +32,7 @@ class Residue {
         self.name = name
     }
     
-    func addAtom(atom: Atom) {
+    func addAtom(_ atom: Atom) {
 
         atoms.append(atom)
     }
